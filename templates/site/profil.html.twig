@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<section class="row article">
+		<article class="card profilcard">
+			<h2>Nom d'utilisateur : {{ app.user.username }}
+			</h2>
+			<div class="content">
+			<h2>Email : {{ app.user.email }}
+			</h2>
+			</div>
+		</article>
+		<div>
+		<h1 class="text-center mx-auto m-3">Produits de {{ app.user.username }} ({{app.user.produits|length}})</h1>
+				{% for produit in app.user.produits %}
+				<article class="card produitprofil" >
+
+			<h2 class="profilnomproduit"> {{ produit.nom }} </h2>	
+			<div class="metadata">
+			<div class="content">
+				<img src="{{ produit.image }}" class="imageprofil" alt="Image du produit">
+				<h3 class="profildescriptionproduit">{{ produit.description|raw }}
+				</h3>
+                <p class="card-text fw-bold">Prix : {{ produit.prix }}$</p>
+				<a href="{{ path('show_product', {id: produit.id}) }}" class="btn btnvoir btn-primary  ">voir</a>
+			</div>
+		</article>
+			{% endfor %}
+				<h1 class="text-center mx-auto m-3">Commentaires de {{ app.user.username }} ({{app.user.commentaires|length}})</h1>
+	<section id="commentaire" class="col-md-10 mx-auto">
+		{% for commentaire in app.user.commentaires %}
+			<div class="comment">
+				<div class="row">
+					<div class="col-md-3">
+					<p>produit :{{ commentaire.produitId.nom }}</p>
+					<p>commentaire : {{ commentaire.contenu|raw }}</p>
+						<p>date : (<small>{{ commentaire.createdAt|date('d/m/Y à H:i:s') }}</small>)</p>
+					</div>
+				</div>
+			</div>
+			<hr>
+		{% endfor %}
+	</section>
+		</div>
+	</section>
+{% endblock %}

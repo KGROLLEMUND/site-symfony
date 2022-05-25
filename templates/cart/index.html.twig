@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Mon panier</h1>
+
+{% if items %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th></th>
+                <th>Prix</th>
+                <th>quantite</th>
+                <th>Suppr/Ajout</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{item.produit.nom}} </td>
+                    <td> </td>
+                    <td>{{item.produit.prix}} $ </td>
+                    <td>{{item.quantite}} </td>
+                    <td>
+                        <a href="{{path('cart_lessAction',{id: item.produit.id}) }}" class="btn-sm btn-success" style="margin-right: 7px;">
+                            <i class="fas fa-minus"></i>
+                        </a>               
+                        <a href="{{path('cart_add',{id: item.produit.id}) }}" class="btn-sm btn-success">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </td>
+                    <td>{{item.produit.prix*item.quantite}} $</td>
+                    <td>
+                        <a href="{{path('cart_remove',{id: item.produit.id}) }}" class="btn-sm btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>                    
+                </tr> 
+            {% endfor %}           
+        </tbody>
+        <tfoot>
+            <tr>
+                <td> </td>
+                <td colspan="4" class="text-end">Total :</td>
+                <td>{{total}} $</td>
+                <td>
+                <a href="{{path('cart_deleteAll') }}" class="btn-sm btn-danger">
+                    <i class="fas fa-trash"></i>
+                </a>
+                </td> 
+            </tr>
+            <tr>
+            <td>
+                
+            </td>
+            <td> </td>
+            <td colspan="2"> 
+                <a style="font-size: 20px; margin-left: 50%; padding: 5px 100px 7px 100px" href="{{path('cart_payment') }} " class="btn-sm btn-success align-items-center">  
+                    <i class="text-end">payer</i>
+                </a>
+            </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        </tfoot>
+        
+    </table>
+{% else %}
+    <p>Mon panier est vide</p>
+{% endif %}
+
+
+
+{% endblock %}

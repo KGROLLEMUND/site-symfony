@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<section class="row article">
+		<article class="card">
+			<h2 class="nomproduit">{{ produit.nom }}
+			</h2>
+			<div class="metadata">
+				Catégorie
+				{{ produit.categorieId.titre }}</div>
+			<div class="content">
+				<img src="{{ produit.image }}" class="imageshow" alt="Image du produit">
+				<br>
+				{{ produit.description|raw }}
+                <p class="card-text ">Prix: {{ produit.prix }}$</p>
+				<a href="{{ path('cart_add', {id: produit.id}) }} " class="card-link btn btn-primary">Ajouter au panier</a>
+				{% if app.user.id == produit.userId.id or is_granted('ROLE_ADMIN')%}
+				<a href="{{ path('edit_product', {id: produit.id}) }} " class="card-link btn btn-primary">Modifier le produit</a>
+				{% endif %}
+			</div>
+		</article>
+	</section>
+
+	<h2 class="mx-auto m-3">Commentaires</h2>
+	<section id="commentaire" class="col-md-10 mx-auto">
+		{% for commentaire in produit.commentaires %}
+			<div class="comment">
+				<div class="row">
+					<div class="col-md-3">
+					<a href="{{ path('user_profil', {id: commentaire.userId.id}) }}">{{commentaire.userId.username}}</a>
+						(<small>{{ commentaire.createdAt|date('d/m/Y à H:i:s') }}</small>)
+					</div>
+					<div class="col-md-9">
+						{{ commentaire.contenu|raw }}
+					</div>
+				</div>
+			</div>
+			<hr>
+		{% endfor %}
+	</section>
+
+	{{ form_start(formCommentaire) }}
+	{{ form_row(formCommentaire.contenu, {
+    'attr': {
+        'placeholder': "Commentaire"
+    }
+}) }}
+	<button type="submit" class="btn btn-primary" label: "Valider">
+	<i class="fas fa-share"></i>
+	{{ form_end(formCommentaire) }}
+
+{% endblock %}

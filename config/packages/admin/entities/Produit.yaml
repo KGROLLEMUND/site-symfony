@@ -1,0 +1,25 @@
+easy_admin:
+  entities:
+    Produit:
+      class: App\Entity\Produit
+      form:
+        fields:
+          - { property: "nom", label: "Titre" }
+          - { property: "user_id", label: "utilisateur" }
+          - { property: "description", label: "Contenu" }
+          - { property: "prix", label: "prix" }
+          - { property: "image",label: "Ajouter une image" }
+          - { property: "categorie_id", label: "Catégorie" }
+
+      list:
+        actions:
+          - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-primary' }
+          - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger' }
+          
+        fields:
+          - { property: "nom", label: "Titre" }
+          - { property: "user_id", label: "utilisateur" }
+          - { property: "description", label: "Contenu" }
+          - { property: "prix", label: "prix" }
+          - { property: "image",label: "Ajouter une image" }
+          - { property: "categorie_id", label: "Catégorie" }
